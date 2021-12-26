@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<meta name="viewport" content="width=device-width, intial-scale=1.0" />-->
+    <title>Todo List</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-8 offset-2 p2">
+            <h3 class="text-center">Todo List</h3>
+
+            <div class="input-group d-flex justify-content-start">
+              <input type="text" class="form-control" v-model="todoItem" @keydown.enter="addTodoItem" />
+              <button class="btn btn-sm btn-primary" @click="addTodoItem">Add</button>
+            </div>
+
+            <div v-if="todoList.length > 0">
+              <ul class="list-group">
+                <li v-for="todo in todoList" :key="todo.id" class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <input class="form-check-input" :id="`todo_completed_${todo.id}`" v-model="todo.completed" type="checkbox" />
+                    <label class="form-check-label ms-2" :class="{'text-decoration-line-through': todo.completed}" :for="`todo_completed_${todo.id}`"
+                      >{{ todo.text }}</label
+                    >
+                  </div>
+                  <button class="btn btn-danger btn-sm" @click="removeTodoItem(todo.id)">Remove</button>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-success">Completed Item Count : {{ completedItemCount }}</small>
+                <small class="text-danger">Unompleted Item Count : {{ unCompletedItemCount }}</small>
+              </div>
+            </div>
+            <div v-else class="alert alert-warning">There's no Todo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
